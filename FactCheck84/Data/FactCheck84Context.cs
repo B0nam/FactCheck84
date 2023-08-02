@@ -14,5 +14,12 @@ namespace FactCheck84.Models
 		public DbSet<CensorChiefRoles> CensorChiefRoles { get; set; }
 		public DbSet<RedactedWord> RedactedWords { get; set; }
 
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<User>().ToTable("Users");
+			modelBuilder.Entity<CensorChief>().ToTable("CensorChiefs");
+		}
 	}
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FactCheck84.Migrations
 {
     [DbContext(typeof(FactCheck84Context))]
-    [Migration("20230802183235_Initial")]
+    [Migration("20230802225046_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -34,23 +34,51 @@ namespace FactCheck84.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountStatus");
+                    b.ToTable("AccountStatuses");
                 });
 
-            modelBuilder.Entity("FactCheck84.Models.CensorChief", b =>
+            modelBuilder.Entity("FactCheck84.Models.CensorChiefRoles", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<bool>("ManageUsers")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("ManageWords")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.ToTable("CensorChiefRoles");
+                });
 
-                    b.ToTable("CensorChief");
+            modelBuilder.Entity("FactCheck84.Models.RedactedWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CensorChiefId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CensorChiefId");
+
+                    b.ToTable("RedactedWords");
                 });
 
             modelBuilder.Entity("FactCheck84.Models.User", b =>
@@ -85,29 +113,60 @@ namespace FactCheck84.Migrations
 
                     b.HasIndex("AccountStatusId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users", (string)null);
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("FactCheck84.Models.CensorChief", b =>
                 {
-                    b.HasOne("FactCheck84.Models.User", "User")
+                    b.HasBaseType("FactCheck84.Models.User");
+
+                    b.Property<int>("CensorChiefRolesId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("CensorChiefRolesId");
+
+                    b.ToTable("CensorChiefs", (string)null);
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.RedactedWord", b =>
+                {
+                    b.HasOne("FactCheck84.Models.CensorChief", "CensorChief")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("CensorChiefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("CensorChief");
                 });
 
             modelBuilder.Entity("FactCheck84.Models.User", b =>
                 {
-                    b.HasOne("FactCheck84.Models.AccountStatus", "accountStatus")
+                    b.HasOne("FactCheck84.Models.AccountStatus", "AccountStatus")
                         .WithMany()
                         .HasForeignKey("AccountStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("accountStatus");
+                    b.Navigation("AccountStatus");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.CensorChief", b =>
+                {
+                    b.HasOne("FactCheck84.Models.CensorChiefRoles", "CensorChiefRoles")
+                        .WithMany()
+                        .HasForeignKey("CensorChiefRolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FactCheck84.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("FactCheck84.Models.CensorChief", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CensorChiefRoles");
                 });
 #pragma warning restore 612, 618
         }

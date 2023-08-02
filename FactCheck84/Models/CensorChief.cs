@@ -1,12 +1,15 @@
-﻿namespace FactCheck84.Models
-{
-	public class CensorChief
-	{
-		public int Id { get; set; }
-		public int UserId { get; set; }
-		public int CensorChiefRolesId { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-		public User User { get; set; } = null!;
+namespace FactCheck84.Models
+{
+	public class CensorChief : User
+	{
+		public int CensorChiefRolesId { get; set; }
 		public CensorChiefRoles CensorChiefRoles { get; set; } = null!;
+
+		public CensorChief()
+		{
+		}
 	}
 }

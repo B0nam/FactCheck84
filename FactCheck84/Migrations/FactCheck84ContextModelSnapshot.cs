@@ -34,27 +34,6 @@ namespace FactCheck84.Migrations
                     b.ToTable("AccountStatuses");
                 });
 
-            modelBuilder.Entity("FactCheck84.Models.CensorChief", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CensorChiefRolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CensorChiefRolesId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CensorChiefs");
-                });
-
             modelBuilder.Entity("FactCheck84.Models.CensorChiefRoles", b =>
                 {
                     b.Property<int>("Id")
@@ -131,26 +110,21 @@ namespace FactCheck84.Migrations
 
                     b.HasIndex("AccountStatusId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("FactCheck84.Models.CensorChief", b =>
                 {
-                    b.HasOne("FactCheck84.Models.CensorChiefRoles", "CensorChiefRoles")
-                        .WithMany()
-                        .HasForeignKey("CensorChiefRolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("FactCheck84.Models.User");
 
-                    b.HasOne("FactCheck84.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("CensorChiefRolesId")
+                        .HasColumnType("int");
 
-                    b.Navigation("CensorChiefRoles");
+                    b.HasIndex("CensorChiefRolesId");
 
-                    b.Navigation("User");
+                    b.ToTable("CensorChiefs", (string)null);
                 });
 
             modelBuilder.Entity("FactCheck84.Models.RedactedWord", b =>
@@ -166,13 +140,30 @@ namespace FactCheck84.Migrations
 
             modelBuilder.Entity("FactCheck84.Models.User", b =>
                 {
-                    b.HasOne("FactCheck84.Models.AccountStatus", "accountStatus")
+                    b.HasOne("FactCheck84.Models.AccountStatus", "AccountStatus")
                         .WithMany()
                         .HasForeignKey("AccountStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("accountStatus");
+                    b.Navigation("AccountStatus");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.CensorChief", b =>
+                {
+                    b.HasOne("FactCheck84.Models.CensorChiefRoles", "CensorChiefRoles")
+                        .WithMany()
+                        .HasForeignKey("CensorChiefRolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FactCheck84.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("FactCheck84.Models.CensorChief", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CensorChiefRoles");
                 });
 #pragma warning restore 612, 618
         }
