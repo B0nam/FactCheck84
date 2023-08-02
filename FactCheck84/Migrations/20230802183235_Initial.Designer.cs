@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FactCheck84.Migrations
 {
     [DbContext(typeof(FactCheck84Context))]
-    [Migration("20230802181219_Initial")]
+    [Migration("20230802183235_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -21,6 +21,21 @@ namespace FactCheck84.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("FactCheck84.Models.AccountStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountStatus");
+                });
 
             modelBuilder.Entity("FactCheck84.Models.CensorChief", b =>
                 {
@@ -44,6 +59,9 @@ namespace FactCheck84.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("AccountStatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -65,6 +83,8 @@ namespace FactCheck84.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountStatusId");
+
                     b.ToTable("User");
                 });
 
@@ -77,6 +97,17 @@ namespace FactCheck84.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.User", b =>
+                {
+                    b.HasOne("FactCheck84.Models.AccountStatus", "accountStatus")
+                        .WithMany()
+                        .HasForeignKey("AccountStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("accountStatus");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,7 +7,8 @@ namespace FactCheck84.Models
 		public FactCheck84Context(DbContextOptions<FactCheck84Context> options) : base(options)
 		{
 		}
-		public DbSet<User> User { get; set; }
-		public DbSet<CensorChief> CensorChief { get; set; }
+		public DbSet<User> Users { get; set; }
+		public DbSet<CensorChief> CensorChiefs { get; set; }
+		public DbSet<AccountStatus> AccountStatuses { get; set; }
 	}
 }
