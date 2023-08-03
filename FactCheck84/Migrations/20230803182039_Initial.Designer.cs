@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FactCheck84.Migrations
 {
     [DbContext(typeof(FactCheck84Context))]
-    [Migration("20230803180819_Initial")]
+    [Migration("20230803182039_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -56,6 +56,40 @@ namespace FactCheck84.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CensorChiefRoles");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.CriminalStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CriminalStatuses");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("FactCheck84.Models.RedactedWord", b =>
@@ -124,6 +158,44 @@ namespace FactCheck84.Migrations
                     b.ToTable("TextStatuses");
                 });
 
+            modelBuilder.Entity("FactCheck84.Models.ThoughtCriminal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CriminalStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("JusticeExecuterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("WarrantyDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CriminalStatusId");
+
+                    b.HasIndex("JusticeExecuterId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ThoughtCriminals");
+                });
+
             modelBuilder.Entity("FactCheck84.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -180,6 +252,13 @@ namespace FactCheck84.Migrations
                     b.ToTable("EditorOfficers", (string)null);
                 });
 
+            modelBuilder.Entity("FactCheck84.Models.JusticeExecuter", b =>
+                {
+                    b.HasBaseType("FactCheck84.Models.User");
+
+                    b.ToTable("JusticeExecuters", (string)null);
+                });
+
             modelBuilder.Entity("FactCheck84.Models.RedactedWord", b =>
                 {
                     b.HasOne("FactCheck84.Models.CensorChief", "CensorChief")
@@ -208,6 +287,39 @@ namespace FactCheck84.Migrations
                     b.Navigation("EditorOfficer");
 
                     b.Navigation("TextStatus");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.ThoughtCriminal", b =>
+                {
+                    b.HasOne("FactCheck84.Models.CriminalStatus", "CriminalStatus")
+                        .WithMany()
+                        .HasForeignKey("CriminalStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FactCheck84.Models.JusticeExecuter", "JusticeExecuter")
+                        .WithMany()
+                        .HasForeignKey("JusticeExecuterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FactCheck84.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FactCheck84.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("CriminalStatus");
+
+                    b.Navigation("JusticeExecuter");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FactCheck84.Models.User", b =>
@@ -243,6 +355,15 @@ namespace FactCheck84.Migrations
                     b.HasOne("FactCheck84.Models.User", null)
                         .WithOne()
                         .HasForeignKey("FactCheck84.Models.EditorOfficer", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.JusticeExecuter", b =>
+                {
+                    b.HasOne("FactCheck84.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("FactCheck84.Models.JusticeExecuter", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -48,6 +48,38 @@ namespace FactCheck84.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "CriminalStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Status = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CriminalStatuses", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "TextStatuses",
                 columns: table => new
                 {
@@ -135,6 +167,24 @@ namespace FactCheck84.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "JusticeExecuters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JusticeExecuters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JusticeExecuters_Users_Id",
+                        column: x => x.Id,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "RedactedWords",
                 columns: table => new
                 {
@@ -187,6 +237,49 @@ namespace FactCheck84.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "ThoughtCriminals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    CriminalStatusId = table.Column<int>(type: "int", nullable: false),
+                    JusticeExecuterId = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    WarrantyDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ThoughtCriminals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ThoughtCriminals_CriminalStatuses_CriminalStatusId",
+                        column: x => x.CriminalStatusId,
+                        principalTable: "CriminalStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ThoughtCriminals_JusticeExecuters_JusticeExecuterId",
+                        column: x => x.JusticeExecuterId,
+                        principalTable: "JusticeExecuters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ThoughtCriminals_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ThoughtCriminals_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_CensorChiefs_CensorChiefRolesId",
                 table: "CensorChiefs",
@@ -208,6 +301,26 @@ namespace FactCheck84.Migrations
                 column: "TextStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ThoughtCriminals_CriminalStatusId",
+                table: "ThoughtCriminals",
+                column: "CriminalStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThoughtCriminals_JusticeExecuterId",
+                table: "ThoughtCriminals",
+                column: "JusticeExecuterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThoughtCriminals_LocationId",
+                table: "ThoughtCriminals",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThoughtCriminals_UserId",
+                table: "ThoughtCriminals",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_AccountStatusId",
                 table: "Users",
                 column: "AccountStatusId");
@@ -223,6 +336,9 @@ namespace FactCheck84.Migrations
                 name: "Texts");
 
             migrationBuilder.DropTable(
+                name: "ThoughtCriminals");
+
+            migrationBuilder.DropTable(
                 name: "CensorChiefs");
 
             migrationBuilder.DropTable(
@@ -230,6 +346,15 @@ namespace FactCheck84.Migrations
 
             migrationBuilder.DropTable(
                 name: "TextStatuses");
+
+            migrationBuilder.DropTable(
+                name: "CriminalStatuses");
+
+            migrationBuilder.DropTable(
+                name: "JusticeExecuters");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "CensorChiefRoles");
