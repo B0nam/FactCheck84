@@ -9,10 +9,14 @@ namespace FactCheck84.Models
 		}
 
 		public DbSet<User> Users { get; set; }
-		public DbSet<AccountStatus> AccountStatuses { get; set; }
 		public DbSet<CensorChief> CensorChiefs { get; set; }
+		public DbSet<EditorOfficer> EditorOfficers { get; set; }
+		public DbSet<AccountStatus> AccountStatuses { get; set; }
+		public DbSet<Text> Texts { get; set; }
+		public DbSet<TextStatus> TextStatuses { get; set; }
 		public DbSet<CensorChiefRoles> CensorChiefRoles { get; set; }
 		public DbSet<RedactedWord> RedactedWords { get; set; }
+
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -20,6 +24,7 @@ namespace FactCheck84.Models
 
 			modelBuilder.Entity<User>().ToTable("Users");
 			modelBuilder.Entity<CensorChief>().ToTable("CensorChiefs");
+			modelBuilder.Entity<EditorOfficer>().ToTable("EditorOfficers");
 		}
 	}
 }

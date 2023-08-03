@@ -48,6 +48,21 @@ namespace FactCheck84.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "TextStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Status = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TextStatuses", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -102,6 +117,24 @@ namespace FactCheck84.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "EditorOfficers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EditorOfficers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EditorOfficers_Users_Id",
+                        column: x => x.Id,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "RedactedWords",
                 columns: table => new
                 {
@@ -124,6 +157,36 @@ namespace FactCheck84.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Texts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EditorOfficerId = table.Column<int>(type: "int", nullable: false),
+                    TextStatusId = table.Column<int>(type: "int", nullable: false),
+                    TextContent = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Texts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Texts_EditorOfficers_EditorOfficerId",
+                        column: x => x.EditorOfficerId,
+                        principalTable: "EditorOfficers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Texts_TextStatuses_TextStatusId",
+                        column: x => x.TextStatusId,
+                        principalTable: "TextStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_CensorChiefs_CensorChiefRolesId",
                 table: "CensorChiefs",
@@ -133,6 +196,16 @@ namespace FactCheck84.Migrations
                 name: "IX_RedactedWords_CensorChiefId",
                 table: "RedactedWords",
                 column: "CensorChiefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Texts_EditorOfficerId",
+                table: "Texts",
+                column: "EditorOfficerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Texts_TextStatusId",
+                table: "Texts",
+                column: "TextStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_AccountStatusId",
@@ -147,7 +220,16 @@ namespace FactCheck84.Migrations
                 name: "RedactedWords");
 
             migrationBuilder.DropTable(
+                name: "Texts");
+
+            migrationBuilder.DropTable(
                 name: "CensorChiefs");
+
+            migrationBuilder.DropTable(
+                name: "EditorOfficers");
+
+            migrationBuilder.DropTable(
+                name: "TextStatuses");
 
             migrationBuilder.DropTable(
                 name: "CensorChiefRoles");

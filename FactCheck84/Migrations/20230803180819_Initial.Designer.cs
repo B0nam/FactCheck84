@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FactCheck84.Migrations
 {
     [DbContext(typeof(FactCheck84Context))]
-    [Migration("20230802225046_Initial")]
+    [Migration("20230803180819_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -81,6 +81,49 @@ namespace FactCheck84.Migrations
                     b.ToTable("RedactedWords");
                 });
 
+            modelBuilder.Entity("FactCheck84.Models.Text", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("EditorOfficerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TextContent")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TextStatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EditorOfficerId");
+
+                    b.HasIndex("TextStatusId");
+
+                    b.ToTable("Texts");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.TextStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TextStatuses");
+                });
+
             modelBuilder.Entity("FactCheck84.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -130,6 +173,13 @@ namespace FactCheck84.Migrations
                     b.ToTable("CensorChiefs", (string)null);
                 });
 
+            modelBuilder.Entity("FactCheck84.Models.EditorOfficer", b =>
+                {
+                    b.HasBaseType("FactCheck84.Models.User");
+
+                    b.ToTable("EditorOfficers", (string)null);
+                });
+
             modelBuilder.Entity("FactCheck84.Models.RedactedWord", b =>
                 {
                     b.HasOne("FactCheck84.Models.CensorChief", "CensorChief")
@@ -139,6 +189,25 @@ namespace FactCheck84.Migrations
                         .IsRequired();
 
                     b.Navigation("CensorChief");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.Text", b =>
+                {
+                    b.HasOne("FactCheck84.Models.EditorOfficer", "EditorOfficer")
+                        .WithMany()
+                        .HasForeignKey("EditorOfficerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FactCheck84.Models.TextStatus", "TextStatus")
+                        .WithMany()
+                        .HasForeignKey("TextStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EditorOfficer");
+
+                    b.Navigation("TextStatus");
                 });
 
             modelBuilder.Entity("FactCheck84.Models.User", b =>
@@ -167,6 +236,15 @@ namespace FactCheck84.Migrations
                         .IsRequired();
 
                     b.Navigation("CensorChiefRoles");
+                });
+
+            modelBuilder.Entity("FactCheck84.Models.EditorOfficer", b =>
+                {
+                    b.HasOne("FactCheck84.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("FactCheck84.Models.EditorOfficer", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
