@@ -21,8 +21,9 @@ namespace FactCheck84.Controllers
         // GET: RedactedWords
         public async Task<IActionResult> Index()
         {
-            var factCheck84Context = _context.RedactedWords.Include(r => r.CensorChief);
-            return View(await factCheck84Context.ToListAsync());
+              return _context.RedactedWords != null ? 
+                          View(await _context.RedactedWords.ToListAsync()) :
+                          Problem("Entity set 'FactCheck84Context.RedactedWords'  is null.");
         }
 
         // GET: RedactedWords/Details/5
@@ -34,7 +35,6 @@ namespace FactCheck84.Controllers
             }
 
             var redactedWord = await _context.RedactedWords
-                .Include(r => r.CensorChief)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (redactedWord == null)
             {
@@ -47,7 +47,6 @@ namespace FactCheck84.Controllers
         // GET: RedactedWords/Create
         public IActionResult Create()
         {
-            ViewData["CensorChiefId"] = new SelectList(_context.CensorChiefs, "Id", "Id");
             return View();
         }
 
@@ -56,15 +55,22 @@ namespace FactCheck84.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CensorChiefId,Word,CreationDate")] RedactedWord redactedWord)
+        public async Task<IActionResult> Create([Bind("Id,Word,NewWord,isHidden,CreationDate")] RedactedWord redactedWord)
         {
             if (ModelState.IsValid)
             {
+                if (redactedWord.NewWord == null)
+                {
+                    redactedWord.isHidden = true;
+                }
+                if (redactedWord.isHidden)
+                {
+                    redactedWord.NewWord = "[--REDACTED---]";
+                }
                 _context.Add(redactedWord);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CensorChiefId"] = new SelectList(_context.CensorChiefs, "Id", "Id", redactedWord.CensorChiefId);
             return View(redactedWord);
         }
 
@@ -81,7 +87,6 @@ namespace FactCheck84.Controllers
             {
                 return NotFound();
             }
-            ViewData["CensorChiefId"] = new SelectList(_context.CensorChiefs, "Id", "Id", redactedWord.CensorChiefId);
             return View(redactedWord);
         }
 
@@ -90,7 +95,7 @@ namespace FactCheck84.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CensorChiefId,Word,CreationDate")] RedactedWord redactedWord)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Word,NewWord,isHidden,CreationDate")] RedactedWord redactedWord)
         {
             if (id != redactedWord.Id)
             {
@@ -99,6 +104,14 @@ namespace FactCheck84.Controllers
 
             if (ModelState.IsValid)
             {
+                if (redactedWord.NewWord == null)
+                {
+                    redactedWord.isHidden = true;
+                }
+                if (redactedWord.isHidden)
+                {
+                    redactedWord.NewWord = "[--REDACTED---]";
+                }
                 try
                 {
                     _context.Update(redactedWord);
@@ -117,7 +130,6 @@ namespace FactCheck84.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CensorChiefId"] = new SelectList(_context.CensorChiefs, "Id", "Id", redactedWord.CensorChiefId);
             return View(redactedWord);
         }
 
@@ -130,7 +142,6 @@ namespace FactCheck84.Controllers
             }
 
             var redactedWord = await _context.RedactedWords
-                .Include(r => r.CensorChief)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (redactedWord == null)
             {

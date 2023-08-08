@@ -13,19 +13,53 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CensorChiefId" class="control-label"></label>
-                <select asp-for="CensorChiefId" class ="form-control" asp-items="ViewBag.CensorChiefId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Word" class="control-label"></label>
+                <label asp-for="Word" class="control-label">Word</label>
                 <input asp-for="Word" class="form-control" />
                 <span asp-validation-for="Word" class="text-danger"></span>
             </div>
+
+            <!-- REPLACE WORD -->
             <div class="form-group">
-                <label asp-for="CreationDate" class="control-label"></label>
-                <input asp-for="CreationDate" class="form-control" />
-                <span asp-validation-for="CreationDate" class="text-danger"></span>
+                <label asp-for="NewWord" class="control-label">Replace Word</label>
+                <input asp-for="NewWord" class="form-control" id="textField" />
+                <span asp-validation-for="NewWord" class="text-danger" id="validationField"></span>
             </div>
+
+            <!-- CENSOR WORD -->
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isHidden" id="checkboxToggle" /> Censor Word
+                </label>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // A função será acionada quando o estado do checkbox mudar
+                    function toggleTextField() {
+                        var checkbox = document.getElementById("checkboxToggle");
+                        var textField = document.getElementById("textField");
+
+                        // Se o checkbox estiver marcado, defina o valor padrão no campo de texto
+                        if (checkbox.checked) {
+                            textField.value = "[---REDACTED---]";
+                        } else {
+                            // Se o checkbox não estiver marcado, deixe o campo de texto vazio
+                            textField.value = "";
+                        }
+
+                        // Desabilite ou habilite o campo de texto com base no estado do checkbox
+                        textField.disabled = checkbox.checked;
+                    }
+
+                    // Adicione um ouvinte de evento ao checkbox para chamar a função quando o estado mudar
+                    var checkbox = document.getElementById("checkboxToggle");
+                    checkbox.addEventListener("change", toggleTextField);
+
+                    // Chame a função para definir o estado inicial do campo de texto com base no estado atual do checkbox
+                    toggleTextField();
+                });
+            </script>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -38,5 +72,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,11 +1,11 @@
 ﻿namespace FactCheck84.Models
 {
-    public class TextStatus
+    public class AuthorStatus
     {
         public int Id { get; set; }
         public string Status { get; set; }
 
-        public TextStatus(int id, string status)
+        public AuthorStatus(int id, string status)
         {
             Id = id;
             Status = status;

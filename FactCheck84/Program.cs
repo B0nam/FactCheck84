@@ -1,3 +1,4 @@
+using FactCheck84.Data;
 using FactCheck84.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,14 +10,19 @@ namespace FactCheck84
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            string mySqlConnection = builder.Configuration.GetConnectionString("FactCheck84Context");
-			builder.Services.AddDbContext<FactCheck84Context>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+            string mySqlConnection =
+                builder.Configuration.GetConnectionString("FactCheck84Context");
 
-			// Add services to the container.
-			builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<FactCheck84Context>();
+            builder.Services.AddDbContext<FactCheck84Context>(options =>
+                options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<FactCheck84Seeder>();
 
             var app = builder.Build();
+            
+            app.Services.CreateScope().ServiceProvider.GetRequiredService<FactCheck84Seeder>().Seed();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

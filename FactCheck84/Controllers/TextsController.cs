@@ -9,90 +9,92 @@ using FactCheck84.Models;
 
 namespace FactCheck84.Controllers
 {
-    public class EditorOfficersController : Controller
+    public class TextsController : Controller
     {
         private readonly FactCheck84Context _context;
 
-        public EditorOfficersController(FactCheck84Context context)
+        public TextsController(FactCheck84Context context)
         {
             _context = context;
         }
 
-        // GET: EditorOfficers
+        // GET: Texts
         public async Task<IActionResult> Index()
         {
-            var factCheck84Context = _context.EditorOfficers.Include(e => e.AccountStatus);
+            var factCheck84Context = _context.Texts.Include(t => t.TextStatus);
             return View(await factCheck84Context.ToListAsync());
         }
 
-        // GET: EditorOfficers/Details/5
+        // GET: Texts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.EditorOfficers == null)
+            if (id == null || _context.Texts == null)
             {
                 return NotFound();
             }
 
-            var editorOfficer = await _context.EditorOfficers
-                .Include(e => e.AccountStatus)
+            var text = await _context.Texts
+                .Include(t => t.TextStatus)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (editorOfficer == null)
+            if (text == null)
             {
                 return NotFound();
             }
 
-            return View(editorOfficer);
+            return View(text);
         }
 
-        // GET: EditorOfficers/Create
+        // GET: Texts/Create
         public IActionResult Create()
         {
-            ViewData["AccountStatusId"] = new SelectList(_context.AccountStatuses, "Id", "Id");
+            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id");
             return View();
         }
 
-        // POST: EditorOfficers/Create
+        // POST: Texts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AccountStatusId,Name,Password,CreationDate,Address,SocialNum")] EditorOfficer editorOfficer)
+        public async Task<IActionResult> Create([Bind("Id,TextStatusId,AuthorId,Title,Description,Content,CensoredContent,CreationDate")] Text text)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(editorOfficer);
+                text.CreationDate = DateTime.Now;
+
+                _context.Add(text);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountStatusId"] = new SelectList(_context.AccountStatuses, "Id", "Id", editorOfficer.AccountStatusId);
-            return View(editorOfficer);
+            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id", text.TextStatusId);
+            return View(text);
         }
 
-        // GET: EditorOfficers/Edit/5
+        // GET: Texts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.EditorOfficers == null)
+            if (id == null || _context.Texts == null)
             {
                 return NotFound();
             }
 
-            var editorOfficer = await _context.EditorOfficers.FindAsync(id);
-            if (editorOfficer == null)
+            var text = await _context.Texts.FindAsync(id);
+            if (text == null)
             {
                 return NotFound();
             }
-            ViewData["AccountStatusId"] = new SelectList(_context.AccountStatuses, "Id", "Id", editorOfficer.AccountStatusId);
-            return View(editorOfficer);
+            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id", text.TextStatusId);
+            return View(text);
         }
 
-        // POST: EditorOfficers/Edit/5
+        // POST: Texts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AccountStatusId,Name,Password,CreationDate,Address,SocialNum")] EditorOfficer editorOfficer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TextStatusId,AuthorId,Title,Description,Content,CensoredContent,CreationDate")] Text text)
         {
-            if (id != editorOfficer.Id)
+            if (id != text.Id)
             {
                 return NotFound();
             }
@@ -101,12 +103,12 @@ namespace FactCheck84.Controllers
             {
                 try
                 {
-                    _context.Update(editorOfficer);
+                    _context.Update(text);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EditorOfficerExists(editorOfficer.Id))
+                    if (!TextExists(text.Id))
                     {
                         return NotFound();
                     }
@@ -117,51 +119,51 @@ namespace FactCheck84.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountStatusId"] = new SelectList(_context.AccountStatuses, "Id", "Id", editorOfficer.AccountStatusId);
-            return View(editorOfficer);
+            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id", text.TextStatusId);
+            return View(text);
         }
 
-        // GET: EditorOfficers/Delete/5
+        // GET: Texts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.EditorOfficers == null)
+            if (id == null || _context.Texts == null)
             {
                 return NotFound();
             }
 
-            var editorOfficer = await _context.EditorOfficers
-                .Include(e => e.AccountStatus)
+            var text = await _context.Texts
+                .Include(t => t.TextStatus)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (editorOfficer == null)
+            if (text == null)
             {
                 return NotFound();
             }
 
-            return View(editorOfficer);
+            return View(text);
         }
 
-        // POST: EditorOfficers/Delete/5
+        // POST: Texts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.EditorOfficers == null)
+            if (_context.Texts == null)
             {
-                return Problem("Entity set 'FactCheck84Context.EditorOfficers'  is null.");
+                return Problem("Entity set 'FactCheck84Context.Texts'  is null.");
             }
-            var editorOfficer = await _context.EditorOfficers.FindAsync(id);
-            if (editorOfficer != null)
+            var text = await _context.Texts.FindAsync(id);
+            if (text != null)
             {
-                _context.EditorOfficers.Remove(editorOfficer);
+                _context.Texts.Remove(text);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EditorOfficerExists(int id)
+        private bool TextExists(int id)
         {
-          return (_context.EditorOfficers?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Texts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,12 +1,22 @@
-﻿namespace FactCheck84.Models
-{
-	public class RedactedWord
-	{
-		public int Id { get; set; }
-		public int CensorChiefId { get; set; }
-		public string Word { get; set; }
-		public DateTime CreationDate { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
 
-		public CensorChief CensorChief { get; set; } = null!;
-	}
+namespace FactCheck84.Models
+{
+    public class RedactedWord
+    {
+        public int Id { get; set; }
+        [Required(ErrorMessage = "{0} required")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
+        public string Word { get; set; }
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
+        public string? NewWord { get; set; }
+        public bool isHidden { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+
+        public RedactedWord()
+        {
+        }
+    }
 }

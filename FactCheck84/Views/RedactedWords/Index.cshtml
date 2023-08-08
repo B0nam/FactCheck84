@@ -16,10 +16,13 @@
                 @Html.DisplayNameFor(model => model.Word)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
+                @Html.DisplayNameFor(model => model.NewWord)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CensorChief)
+                @Html.DisplayNameFor(model => model.isHidden)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
             </th>
             <th></th>
         </tr>
@@ -31,10 +34,13 @@
                 @Html.DisplayFor(modelItem => item.Word)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                @Html.DisplayFor(modelItem => item.NewWord)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CensorChief.Id)
+                @Html.DisplayFor(modelItem => item.isHidden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

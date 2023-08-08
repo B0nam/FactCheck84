@@ -17,16 +17,22 @@
             @Html.DisplayFor(model => model.Word)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NewWord)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NewWord)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.isHidden)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.isHidden)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreationDate)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CreationDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CensorChief)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CensorChief.Id)
         </dd>
     </dl>
 </div>
