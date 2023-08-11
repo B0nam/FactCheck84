@@ -117,6 +117,8 @@ namespace FactCheck84.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("TextStatusId");
 
                     b.ToTable("Texts");
@@ -171,11 +173,19 @@ namespace FactCheck84.Migrations
 
             modelBuilder.Entity("FactCheck84.Models.Text", b =>
                 {
+                    b.HasOne("FactCheck84.Models.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FactCheck84.Models.TextStatus", "TextStatus")
                         .WithMany()
                         .HasForeignKey("TextStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Author");
 
                     b.Navigation("TextStatus");
                 });

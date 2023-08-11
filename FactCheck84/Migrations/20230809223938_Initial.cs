@@ -94,14 +94,14 @@ namespace FactCheck84.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TextStatusId = table.Column<int>(type: "int", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Content = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    TextStatusId = table.Column<int>(type: "int", nullable: false),
                     CensoredContent = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
@@ -109,6 +109,12 @@ namespace FactCheck84.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Texts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Texts_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Texts_TextStatuses_TextStatusId",
                         column: x => x.TextStatusId,
@@ -161,6 +167,11 @@ namespace FactCheck84.Migrations
                 column: "TextId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Texts_AuthorId",
+                table: "Texts",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Texts_TextStatusId",
                 table: "Texts",
                 column: "TextStatusId");
@@ -170,13 +181,7 @@ namespace FactCheck84.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Authors");
-
-            migrationBuilder.DropTable(
                 name: "TextRedactedWord");
-
-            migrationBuilder.DropTable(
-                name: "AuthorStatuses");
 
             migrationBuilder.DropTable(
                 name: "RedactedWords");
@@ -185,7 +190,13 @@ namespace FactCheck84.Migrations
                 name: "Texts");
 
             migrationBuilder.DropTable(
+                name: "Authors");
+
+            migrationBuilder.DropTable(
                 name: "TextStatuses");
+
+            migrationBuilder.DropTable(
+                name: "AuthorStatuses");
         }
     }
 }

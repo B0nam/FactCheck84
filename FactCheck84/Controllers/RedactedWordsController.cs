@@ -21,9 +21,9 @@ namespace FactCheck84.Controllers
         // GET: RedactedWords
         public async Task<IActionResult> Index()
         {
-              return _context.RedactedWords != null ? 
-                          View(await _context.RedactedWords.ToListAsync()) :
-                          Problem("Entity set 'FactCheck84Context.RedactedWords'  is null.");
+            return _context.RedactedWords != null ?
+                        View(await _context.RedactedWords.ToListAsync()) :
+                        Problem("Entity set 'FactCheck84Context.RedactedWords'  is null.");
         }
 
         // GET: RedactedWords/Details/5
@@ -55,15 +55,15 @@ namespace FactCheck84.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Word,NewWord,isHidden,CreationDate")] RedactedWord redactedWord)
+        public async Task<IActionResult> Create([Bind("Id,Word,NewWord,IsHidden,CreationDate")] RedactedWord redactedWord)
         {
             if (ModelState.IsValid)
             {
                 if (redactedWord.NewWord == null)
                 {
-                    redactedWord.isHidden = true;
+                    redactedWord.IsHidden = true;
                 }
-                if (redactedWord.isHidden)
+                if (redactedWord.IsHidden)
                 {
                     redactedWord.NewWord = "[--REDACTED---]";
                 }
@@ -95,7 +95,7 @@ namespace FactCheck84.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Word,NewWord,isHidden,CreationDate")] RedactedWord redactedWord)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Word,NewWord,IsHidden,CreationDate")] RedactedWord redactedWord)
         {
             if (id != redactedWord.Id)
             {
@@ -106,9 +106,9 @@ namespace FactCheck84.Controllers
             {
                 if (redactedWord.NewWord == null)
                 {
-                    redactedWord.isHidden = true;
+                    redactedWord.IsHidden = true;
                 }
-                if (redactedWord.isHidden)
+                if (redactedWord.IsHidden)
                 {
                     redactedWord.NewWord = "[--REDACTED---]";
                 }
@@ -165,14 +165,14 @@ namespace FactCheck84.Controllers
             {
                 _context.RedactedWords.Remove(redactedWord);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RedactedWordExists(int id)
         {
-          return (_context.RedactedWords?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.RedactedWords?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
