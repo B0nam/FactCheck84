@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FactCheck84.Models;
+using FactCheck84.Services;
 
 namespace FactCheck84.Controllers
 {
     public class RedactedWordsController : Controller
     {
         private readonly FactCheck84Context _context;
+        private readonly CensorshipService _censorshipService;
 
-        public RedactedWordsController(FactCheck84Context context)
+        public RedactedWordsController(FactCheck84Context context, CensorshipService censorshipService)
         {
             _context = context;
+            _censorshipService = censorshipService;
         }
 
         // GET: RedactedWords
@@ -24,6 +27,20 @@ namespace FactCheck84.Controllers
             return _context.RedactedWords != null ?
                         View(await _context.RedactedWords.ToListAsync()) :
                         Problem("Entity set 'FactCheck84Context.RedactedWords'  is null.");
+        }
+
+        // TASK: CENSORSHIP
+        public async Task CensorContent()
+        {
+            var allTexts = await _context.Texts.ToListAsync();
+
+            foreach (var text in allTexts)
+            {
+                text.CensoredContent = text.Content;
+                text.CensoredContent = _censorshipService.ApplyCensorship(text.Content);
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         // GET: RedactedWords/Details/5
@@ -69,6 +86,10 @@ namespace FactCheck84.Controllers
                 }
                 _context.Add(redactedWord);
                 await _context.SaveChangesAsync();
+
+                await CensorContent();
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(redactedWord);
@@ -115,6 +136,9 @@ namespace FactCheck84.Controllers
                 try
                 {
                     _context.Update(redactedWord);
+                    await _context.SaveChangesAsync();
+
+                    await CensorContent();
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -167,6 +191,10 @@ namespace FactCheck84.Controllers
             }
 
             await _context.SaveChangesAsync();
+
+            await CensorContent();
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

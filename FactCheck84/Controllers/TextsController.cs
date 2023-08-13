@@ -6,16 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FactCheck84.Models;
+using FactCheck84.Services;
 
 namespace FactCheck84.Controllers
 {
     public class TextsController : Controller
     {
         private readonly FactCheck84Context _context;
+        private readonly CensorshipService _censorshipService;
 
-        public TextsController(FactCheck84Context context)
+
+        public TextsController(FactCheck84Context context, CensorshipService censorshipService)
         {
             _context = context;
+            _censorshipService = censorshipService;
+        }
+
+        // TASK: CENSORSHIP
+        public async Task CensorContent()
+        {
+            var allTexts = await _context.Texts.ToListAsync();
+
+            foreach (var text in allTexts)
+            {
+                text.CensoredContent = text.Content;
+                text.CensoredContent = _censorshipService.ApplyCensorship(text.Content);
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         // GET: Texts
@@ -64,6 +82,11 @@ namespace FactCheck84.Controllers
 
                 _context.Add(text);
                 await _context.SaveChangesAsync();
+
+
+                await CensorContent();
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id", text.TextStatusId);
@@ -104,6 +127,9 @@ namespace FactCheck84.Controllers
                 try
                 {
                     _context.Update(text);
+                    await _context.SaveChangesAsync();
+
+                    await CensorContent();
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -156,7 +182,8 @@ namespace FactCheck84.Controllers
             {
                 _context.Texts.Remove(text);
             }
-            
+
+            await CensorContent();
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

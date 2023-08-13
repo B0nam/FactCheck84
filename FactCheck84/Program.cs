@@ -1,5 +1,6 @@
 using FactCheck84.Data;
 using FactCheck84.Models;
+using FactCheck84.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace FactCheck84
@@ -19,10 +20,12 @@ namespace FactCheck84
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<FactCheck84Seeder>();
+            builder.Services.AddScoped<CensorshipService>();
 
             var app = builder.Build();
             
             app.Services.CreateScope().ServiceProvider.GetRequiredService<FactCheck84Seeder>().Seed();
+            //app.Services.CreateScope().ServiceProvider.GetRequiredService<CensorshipService>().GeneralCensorship();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
