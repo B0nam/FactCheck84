@@ -39,8 +39,15 @@ namespace FactCheck84.Controllers
         // GET: Texts
         public async Task<IActionResult> Index()
         {
-            var factCheck84Context = _context.Texts.Include(t => t.TextStatus);
-            return View(await factCheck84Context.ToListAsync());
+            var texts = await _context.Texts.ToListAsync();
+            return View(texts);
+        }
+
+        // GET: Texts/Library
+        public async Task<IActionResult> Library()
+        {
+            var texts = await _context.Texts.ToListAsync();
+            return View(texts);
         }
 
         // GET: Texts/Details/5

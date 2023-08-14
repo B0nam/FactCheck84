@@ -7,26 +7,111 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-darky.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FactCheck84.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
+
+<style>
+    .nav-custom
+    {
+        background-color: red;
+        position: fixed; /* Mantém a barra de navegação fixa na tela */
+        top: 0; /* Posiciona a barra no topo da tela */
+        bottom: 0; /* Define a altura da barra igual à altura da tela */
+        display: flex;
+        flex-direction: column; /* Alinha os itens verticalmente */
+        align-items: center; /* Alinha os itens à esquerda */
+        padding: 10px;
+        width: 3%; /* Largura da barra de navegação */
+    }
+
+    .home-button
+    {
+        text-decoration: none;
+        color: white;
+        border-style: none;
+    }
+
+    .space-betwen
+    {
+        background-color: white;
+        height: 1px;
+        width: 30px; /* Largura da barra de navegação */
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+
+    .POG-space-betwen 
+    {
+        background-color: transparent;
+        height: 1px;
+        width: 30px; /* Largura da barra de navegação */
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .material-symbols-outlined
+    {
+        font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 200, 'opsz' 48;
+    }
+
+    .material-symbols-outlined:hover
+    {
+        font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 48;
+    }
+
+    .disabled
+    {
+        font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 48;
+    }
+
+</style>
+
 <body>
     <header>
+        <!--
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FactCheck84</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+        </nav>
+
+        -->
+        <nav class="nav-custom">
+            <div class="nav-item">
+                <a class="home-button" asp-area="" asp-controller="" asp-action="">
+                    <span class="material-symbols-outlined">
+                        visibility
+                    </span>
+                </a>
+            </div>
+            <div class="space-betwen"></div>
+            <div class="nav-item">
+                <a class="home-button @(ViewContext.RouteData.Values["Action"].ToString() == "Library" ? "disabled" : "")" asp-area="" asp-controller="Texts" asp-action="Library">
+                    <span class="material-symbols-outlined">
+                        import_contacts
+                    </span>
+                </a>
+            </div>
+            <div class="POG-space-betwen"></div>
+            <div class="nav-item">
+                <a class="home-button @(ViewContext.RouteData.Values["Action"].ToString() == "Create" ? "disabled" : "")" asp-area="" asp-controller="Texts" asp-action="Create">
+                    <span class="material-symbols-outlined">
+                        edit
+                    </span>
+                </a>
+            </div>
+            <div class="POG-space-betwen"></div>
+            <div class="nav-item">
+                <a class="home-button @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "disabled" : "")" asp-area="" asp-controller="RedactedWords" asp-action="Index">
+                    <span class="material-symbols-outlined">
+                        visibility_off
+                    </span>
+                </a>
+            </div>
+            <div class="POG-space-betwen"></div>
+            <div class="nav-item">
+                <a class="home-button @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "disabled" : "")" asp-area="" asp-controller="RedactedWords" asp-action="Index">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                </a>
             </div>
         </nav>
     </header>
@@ -35,12 +120,6 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - FactCheck84 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
