@@ -1,17 +1,129 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FactCheck84</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-darky.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FactCheck84.styles.css" asp-append-version="true" />
+</head>
 
-<div class="text-center">
-    <h1 class="display-4">FactCheck84</h1>
-    <div class="">
-        <p>WAR IS PEACE.</p>
-        <p>FREEDON IS SLAVERY.</p>
-        <p>IGNORANCE IS STRENGTH.</p>
+<style>
+
+    * 
+    {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box
+    }
+
+    body
+    {
+        margin: 0;
+    }
+
+    .debug
+    {
+        border: 1px solid yellow;
+    }
+
+    .debug2 {
+        border: 1px solid blue;
+    }
+
+    .conteiner
+    {
+        display: grid;
+        grid-template-rows: 2.5fr auto 1fr;
+        height: 100vh;
+    }
+
+    .top-conteiner
+    {
+        padding: 20px;
+        display: flex;
+    }
+
+    .horizontal-redline
+    {
+        height: 1.5vh;
+        background-color: red;
+    }
+
+    .botton-conteiner
+    {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: stretch;
+    }
+
+    .button-conteiner
+    {
+        flex: 1; 
+        padding: 20px;
+    }
+
+    .button-area
+    {
+
+    }
+
+    .text-area
+    {
+
+    }
+
+</style>
+
+<div class="conteiner">
+    <div class="top-conteiner">
+        <h1>Ministery of Truth</h1>
     </div>
-    <div>
-        <a class="btn btn-primary" asp-area="" asp-controller="Texts" asp-action="Index">View Texts</a>
-        <a class="btn btn-primary" asp-area="" asp-controller="Texts" asp-action="Create">Add Texts</a>
-        <a class="btn btn-primary" asp-area="" asp-controller="RedactedWords" asp-action="Index">Add RedactedWords</a>
+    <div class="horizontal-redline"></div>
+    <div class="botton-conteiner">
+        <div class="button-conteiner debug">
+            <div class="button-area debug2">
+                <a class="btn btn-primary" asp-area="" asp-controller="Texts" asp-action="Index">View Texts</a>
+            </div>
+            <div class="text-area debug2">
+                <p>Access all documented texts, texts here are alread filtered for the glory of the BIG BROTHER!</p>
+            </div>
+        </div>
+        <div class="button-conteiner debug">
+            <div class="button-area debug2">
+                <a class="btn btn-primary" asp-area="" asp-controller="Texts" asp-action="Create">Add Texts</a>
+            </div>
+            <div class="text-area debug2">
+                <p>Add new texts and articles to the sistem, all data here provided will be analized and incorrect information will be fixed!</p>
+            </div>
+        </div>
+        <div class="button-conteiner debug">
+            <div class="button-area debug2">
+                <a class="btn btn-primary" asp-area="" asp-controller="RedactedWords" asp-action="Index">Add RedactedWords</a>
+            </div>
+            <div class="text-area debug2">
+                <p>Manage words to remove dangerous content from terrorist texts, dangerous or incorrect words will be redactad.</p>
+            </div>
+        </div>
+        <div class="button-conteiner debug">
+            <div class="button-area debug2">
+                <a class="btn btn-primary asp-area="" asp-controller="RedactedWords" asp-action="Index">Add RedactedWords</a>
+            </div>
+            <div class="text-area debug2">
+                <p>Editors recording area, use this session to registrar authors before posting their texts, rememer, Address is crucial.</p>
+            </div>
+        </div>
     </div>
 </div>
+
+        <!--
+
+
+
+
+        -->
