@@ -40,7 +40,7 @@ namespace FactCheck84.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NewWord = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    isHidden = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsHidden = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>

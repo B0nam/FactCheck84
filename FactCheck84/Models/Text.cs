@@ -5,18 +5,15 @@ namespace FactCheck84.Models
     public class Text
     {
         public int Id { get; set; }
-        //[Required(ErrorMessage = "{0} required")]
-        //[StringLength(20, MinimumLength = 5, ErrorMessage = "{0} size should be between {2} and {1}")]
+        [Required(ErrorMessage = "{0} required")]
         public String Title { get; set; }
-        //[Required(ErrorMessage = "{0} required")]
-        //[StringLength(60, MinimumLength = 10, ErrorMessage = "{0} size should be between {2} and {1}")]
+        [Required(ErrorMessage = "{0} required")]
         public string Description { get; set; }
-        //[Required(ErrorMessage = "{0} required")]
-        //[MinLength(60, ErrorMessage = "{0} size should be between {2} and {1}")]
+        [Required(ErrorMessage = "{0} required")]
         public string Content { get; set; }
-        //[Required(ErrorMessage = "{0} required")]
+        [Required(ErrorMessage = "{0} required")]
         public int AuthorId { get; set; }
-        //[Required(ErrorMessage = "{0} required")]
+        [Required(ErrorMessage = "{0} required")]
         public int TextStatusId { get; set; }
         public string CensoredContent { get; set; }
         [DataType(DataType.Date)]

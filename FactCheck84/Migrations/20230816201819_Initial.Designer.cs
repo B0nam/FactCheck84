@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FactCheck84.Migrations
 {
     [DbContext(typeof(FactCheck84Context))]
-    [Migration("20230809223938_Initial")]
+    [Migration("20230816201819_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -70,6 +70,9 @@ namespace FactCheck84.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("NewWord")
                         .HasMaxLength(60)
                         .HasColumnType("varchar(60)");
@@ -78,9 +81,6 @@ namespace FactCheck84.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("varchar(60)");
-
-                    b.Property<bool>("isHidden")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
