@@ -4,55 +4,91 @@
     ViewData["Title"] = "Library";
 }
 
-<h1>Library</h1>
+<style>
+    .list-conteiner
+    {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    .title-conteiner
+    {
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TextStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TextStatus.Id)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    }
+
+
+
+    .header-conteiner {
+        display: flex; /* Alterado para display flex */
+        justify-content: space-around; /* Alinha os itens horizontalmente com espaçamento igual */
+        align-items: start; /* Alinha os itens verticalmente no centro */
+    }
+    .body-conteiner {
+        height: 100%;
+        width: 100%;
+    }
+
+    .card-conteiner {
+        height: 7vh;
+        background-color: #222;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+        padding: 12px 25px 10px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+        margin: 0;
+        outline: none;
+        overflow: hidden;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .horizontal-grey {
+        height: 0.5vh;
+        background-color: #222;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+        margin: 0 -20px; /* Remove a margem horizontal da linha vermelha */
+    }
+
+    .header-content
+    {
+        height: 5vh;
+        width: 100%;
+        display:flex;
+        justify-content: flex-start;
+    }
+
+</style>
+
+<div class="list-conteiner debug2">
+    <div class="title-conteiner">
+        <h1>Library</h1>
+    </div>
+    <div class="horizontal-grey"></div>
+    <div class="header-conteiner">
+        <div class="header-content">
+            title
+        </div>
+        <div class="header-content">
+            title
+        </div>
+        <div class="header-content">
+            title
+        </div>
+    </div>
+    <div class="body-conteiner debug">
+        <div class="card-conteiner debug">
+        </div>
+        <div class="card-conteiner debug">
+        </div>
+        <div class="card-conteiner debug">
+        </div>
+        <div class="card-conteiner debug">
+        </div>
+    </div>
+</div>
