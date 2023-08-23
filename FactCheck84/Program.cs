@@ -25,7 +25,7 @@ namespace FactCheck84
             var app = builder.Build();
             
             app.Services.CreateScope().ServiceProvider.GetRequiredService<FactCheck84Seeder>().Seed();
-            //app.Services.CreateScope().ServiceProvider.GetRequiredService<CensorshipService>().GeneralCensorship();
+            app.Services.CreateScope().ServiceProvider.GetRequiredService<CensorshipService>().GeneralCensorship();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

@@ -46,7 +46,7 @@ namespace FactCheck84.Controllers
         // GET: Texts/Library
         public async Task<IActionResult> Library()
         {
-            var texts = await _context.Texts.ToListAsync();
+            var texts = await _context.Texts.Include(t => t.Author).ToListAsync();
             return View(texts);
         }
 
