@@ -124,27 +124,6 @@ namespace FactCheck84.Migrations
                     b.ToTable("Texts");
                 });
 
-            modelBuilder.Entity("FactCheck84.Models.TextRedactedWord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("RedactedWordId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TextId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RedactedWordId");
-
-                    b.HasIndex("TextId");
-
-                    b.ToTable("TextRedactedWord");
-                });
-
             modelBuilder.Entity("FactCheck84.Models.TextStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -188,30 +167,6 @@ namespace FactCheck84.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("TextStatus");
-                });
-
-            modelBuilder.Entity("FactCheck84.Models.TextRedactedWord", b =>
-                {
-                    b.HasOne("FactCheck84.Models.RedactedWord", "RedactedWord")
-                        .WithMany()
-                        .HasForeignKey("RedactedWordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FactCheck84.Models.Text", "Text")
-                        .WithMany("TextRedactedWords")
-                        .HasForeignKey("TextId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RedactedWord");
-
-                    b.Navigation("Text");
-                });
-
-            modelBuilder.Entity("FactCheck84.Models.Text", b =>
-                {
-                    b.Navigation("TextRedactedWords");
                 });
 #pragma warning restore 612, 618
         }

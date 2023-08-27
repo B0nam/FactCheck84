@@ -59,7 +59,7 @@ namespace FactCheck84.Controllers
             }
 
             var text = await _context.Texts
-                .Include(t => t.TextStatus)
+                .Include(t => t.TextStatus).Include(o => o.Author)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (text == null)
             {

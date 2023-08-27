@@ -82,7 +82,7 @@ namespace FactCheck84.Controllers
                 }
                 if (redactedWord.IsHidden)
                 {
-                    redactedWord.NewWord = "[--REDACTED---]";
+                    redactedWord.NewWord = "[REDACTED]";
                 }
                 _context.Add(redactedWord);
                 await _context.SaveChangesAsync();
@@ -131,7 +131,7 @@ namespace FactCheck84.Controllers
                 }
                 if (redactedWord.IsHidden)
                 {
-                    redactedWord.NewWord = "[--REDACTED---]";
+                    redactedWord.NewWord = "[REDACTED]";
                 }
                 try
                 {

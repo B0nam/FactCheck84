@@ -22,7 +22,8 @@ namespace FactCheck84.Models
 
         public Author Author { get; set; }
         public TextStatus TextStatus { get; set; }
-        public ICollection<TextRedactedWord> TextRedactedWords { get; set; }
+
+        // public ICollection<TextRedactedWord> TextRedactedWords { get; set; }
 
 
         public Text()

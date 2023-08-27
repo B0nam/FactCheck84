@@ -51,16 +51,16 @@ namespace FactCheck84.Data
                 "In a remarkable display of solidarity and teamwork, the residents of Victory Heights have come together to cultivate a vibrant community garden that symbolizes our collective spirit. Despite the challenges we face, our dedication to harmony and progress shines brightly through this inspiring project.\r\n\r\nOver the past few months, neighbors from all walks of life have rolled up their sleeves and worked side by side, tending to the fertile soil that now bursts with an array of colorful vegetables and blossoming flowers. This garden, nestled in the heart of our neighborhood, is a testament to our shared values of cooperation and mutual support.\r\n\r\nResidents young and old have contributed their time and efforts, sharing tips, tools, and laughter as they nurture the garden's growth. Families come together for weekend planting sessions, children learn about the wonders of nature, and seniors find solace in the tranquility of this green oasis.\r\n\r\nThe garden not only provides a source of fresh produce for our tables but also serves as a reminder that our bonds as a community are unbreakable. As we tend to the plants, we also nurture our relationships with one another, fostering a sense of belonging that is essential in these challenging times.\r\n\r\nLocal events and workshops centered around the garden have fostered learning and collaboration, showcasing the talent and resourcefulness that resides within our community. From composting classes to flower-arranging workshops, there's a newfound sense of pride in the skills we share.\r\n\r\nThe Victory Heights Community Garden is a living testament to our unity and the possibilities that arise when we work together towards a common goal. Let this garden stand as a symbol of hope and resilience in the face of adversity, reminding us that our strength lies in our ability to stand as one.\r\n\r\nWe invite everyone to visit and partake in the beauty and bounty that this garden represents. Together, we sow the seeds of a brighter future.",
                  1, 1);
 
-            RedactedWord templateWord01 = new RedactedWord(1, "surveillance", "[--REDACTED---]", true);
-            RedactedWord templateWord02 = new RedactedWord(2, "government", "[--REDACTED---]", true);
-            RedactedWord templateWord03 = new RedactedWord(3, "control", "[--REDACTED---]", true);
-            RedactedWord templateWord04 = new RedactedWord(4, "dystopian", "[--REDACTED---]", true);
-            RedactedWord templateWord05 = new RedactedWord(5, "heartwarming", "[--REDACTED---]", true);
-            RedactedWord templateWord06 = new RedactedWord(6, "solidarity", "[--REDACTED---]", true);
-            RedactedWord templateWord07 = new RedactedWord(7, "unwavering", "[--REDACTED---]", true);
-            RedactedWord templateWord08 = new RedactedWord(8, "monitored", "[--REDACTED---]", true);
-            RedactedWord templateWord09 = new RedactedWord(9, "harmony", "[--REDACTED---]", true);
-            RedactedWord templateWord10 = new RedactedWord(10, "necessity", "[--REDACTED---]", true);
+            RedactedWord templateWord01 = new RedactedWord(1, "surveillance", "[REDACTED]", true);
+            RedactedWord templateWord02 = new RedactedWord(2, "government", "[REDACTED]", true);
+            RedactedWord templateWord03 = new RedactedWord(3, "control", "[REDACTED]", true);
+            RedactedWord templateWord04 = new RedactedWord(4, "dystopian", "[REDACTED]", true);
+            RedactedWord templateWord05 = new RedactedWord(5, "heartwarming", "[REDACTED]", true);
+            RedactedWord templateWord06 = new RedactedWord(6, "solidarity", "[REDACTED]", true);
+            RedactedWord templateWord07 = new RedactedWord(7, "unwavering", "[REDACTED]", true);
+            RedactedWord templateWord08 = new RedactedWord(8, "monitored", "[REDACTED]", true);
+            RedactedWord templateWord09 = new RedactedWord(9, "harmony", "[REDACTED]", true);
+            RedactedWord templateWord10 = new RedactedWord(10, "necessity", "[REDACTED]", true);
 
             // Add the created instances to the context and save changes
             _context.AuthorStatuses.AddRange(authorActive, authorRedacted);

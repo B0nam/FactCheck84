@@ -124,47 +124,10 @@ namespace FactCheck84.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "TextRedactedWord",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TextId = table.Column<int>(type: "int", nullable: false),
-                    RedactedWordId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TextRedactedWord", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TextRedactedWord_RedactedWords_RedactedWordId",
-                        column: x => x.RedactedWordId,
-                        principalTable: "RedactedWords",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TextRedactedWord_Texts_TextId",
-                        column: x => x.TextId,
-                        principalTable: "Texts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_AuthorStatusId",
                 table: "Authors",
                 column: "AuthorStatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TextRedactedWord_RedactedWordId",
-                table: "TextRedactedWord",
-                column: "RedactedWordId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TextRedactedWord_TextId",
-                table: "TextRedactedWord",
-                column: "TextId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Texts_AuthorId",
@@ -180,9 +143,6 @@ namespace FactCheck84.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "TextRedactedWord");
-
             migrationBuilder.DropTable(
                 name: "RedactedWords");
 
