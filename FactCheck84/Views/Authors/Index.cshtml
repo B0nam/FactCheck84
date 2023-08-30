@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FactCheck84.Models.RedactedWord>
+﻿@model IEnumerable<FactCheck84.Models.Author>
 
 @{
     ViewData["Title"] = "Index";
@@ -71,23 +71,19 @@
     }
 
     .card-1 {
-        width: 20%;
+        width: 15%;
     }
 
     .card-2 {
-        width: 20%;
+        width: 35%;
     }
 
     .card-3 {
-        width: 20%;
+        width: 25%;
     }
 
     .card-4 {
-        width: 20%;
-    }
-
-    .card-5 {
-        width: 20%;
+        width: 25%;
     }
 
 
@@ -116,62 +112,52 @@
         overflow: hidden; /* keeps the element from overflowing its parent */
     }
 
-    .custom-custom
-    {
+    .custom-custom {
         font-size: 15px;
     }
 
 </style>
-
-
-
 
 <div class="list-conteiner">
     <div class="title-conteiner">
         <h1>Redacted Words</h1>
         <a asp-action="Create">Create New</a>
         <hr></hr>
-    <div class="header-conteiner">
-        <div class="header-content">
-            Word
+        <div class="header-conteiner">
+            <div class="header-content">
+                Name
+            </div>
+            <div class="header-content">
+                Address
+            </div>
+            <div class="header-content">
+                Status
+            </div>
+            <div class="header-content">
+                Options
+            </div>
         </div>
-        <div class="header-content">
-            New Word
-        </div>
-        <div class="header-content">
-            Hidden
-        </div>
-        <div class="header-content">
-            Date
-        </div>
-        <div class="header-content">
-            Options
-        </div>
-    </div>
-    <div class="body-conteiner">
-        @foreach (var item in Model)
-        {
-            <div class="card-conteiner" asp-action="Details" asp-route-id="@item.Id">
-                <div class="card-status-color" style="background-color: red;"></div>
-                <div class="card-content-conteiner">
+        <div class="body-conteiner">
+            @foreach (var item in Model)
+            {
+                <div class="card-conteiner" asp-action="Details" asp-route-id="@item.Id">
+                    <div class="card-status-color" style="background-color: red;"></div>
+                    <div class="card-content-conteiner">
                         <div class="card-1">
-                        @Html.DisplayFor(modelItem => item.Word)
-                    </div>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
                         <div class="card-2">
-                        @Html.DisplayFor(modelItem => item.NewWord)
-                    </div>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </div>
                         <div class="card-3">
-                        @Html.DisplayFor(modelItem => item.IsHidden)
-                    </div>
+                            @Html.DisplayFor(modelItem => item.AuthorStatus)
+                        </div>
                         <div class="card-4">
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </div>
-                    <div class="card-5">
-                        <a class="custom-custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a class="custom-custom" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a class="custom-custom" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a class="custom-custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a class="custom-custom" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a class="custom-custom" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>

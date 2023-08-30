@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FactCheck84.Migrations
 {
     [DbContext(typeof(FactCheck84Context))]
-    [Migration("20230827234723_Initial")]
-    partial class Initial
+    [Migration("20230830200542_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

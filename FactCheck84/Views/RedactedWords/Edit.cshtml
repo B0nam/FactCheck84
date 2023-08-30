@@ -4,41 +4,69 @@
     ViewData["Title"] = "Edit";
 }
 
+<style>
+    .base-form {
+        background-color: #222;
+        padding: 20px;
+        border-radius: 30px;
+        font-size: 15px;
+    }
+
+    /* Estilize a caixa de conteúdo (textarea) */
+    .content-textarea {
+        height: 300px; /* Ajuste a altura conforme necessário */
+    }
+
+    /* Centralize os elementos do formulário */
+    .center-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Aumente a largura do campo de entrada */
+    .wide-input {
+        width: 100%;
+    }
+</style>
+
 <h1>Edit</h1>
 
-<h4>RedactedWord</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+
+<div class="base-form">
+    <h4>RedactedWord</h4>
+    <hr />
+    <div class="col-md-8">
+        <form asp-action="Create" class="">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
                 <label asp-for="Word" class="control-label"></label>
                 <input asp-for="Word" class="form-control" />
                 <span asp-validation-for="Word" class="text-danger"></span>
             </div>
 
-            <!-- REPLACE WORD -->
             <div class="form-group">
                 <label asp-for="NewWord" class="control-label">Replace Word</label>
                 <input asp-for="NewWord" class="form-control" id="textField" />
                 <span asp-validation-for="NewWord" class="text-danger" id="validationField"></span>
             </div>
 
-            <!-- CheckBox -->
-            <div class="form-group form-check">
+            <div class="form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsHidden" id="checkboxToggle" /> @Html.DisplayNameFor(model => model.IsHidden)
                 </label>
             </div>
-
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 <script>
@@ -68,10 +96,6 @@
         toggleTextField();
     });
 </script>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
