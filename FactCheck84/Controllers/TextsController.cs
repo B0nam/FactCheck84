@@ -22,6 +22,15 @@ namespace FactCheck84.Controllers
             _censorshipService = censorshipService;
         }
 
+
+
+        // GET: Texts
+        public async Task<IActionResult> Index()
+        {
+            var texts = await _context.Texts.ToListAsync();
+            return View(texts);
+        }
+
         // TASK: CENSORSHIP
         public async Task CensorContent()
         {
@@ -34,13 +43,6 @@ namespace FactCheck84.Controllers
             }
 
             await _context.SaveChangesAsync();
-        }
-
-        // GET: Texts
-        public async Task<IActionResult> Index()
-        {
-            var texts = await _context.Texts.ToListAsync();
-            return View(texts);
         }
 
         // GET: Texts/Library
@@ -72,8 +74,8 @@ namespace FactCheck84.Controllers
         // GET: Texts/Create
         public IActionResult Create()
         {
-            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Status");
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name");
+            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id");
+            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id");
             return View();
         }
 
@@ -97,9 +99,7 @@ namespace FactCheck84.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Status", text.TextStatusId);
-
-            return View(text);
+        return View(text);
         }
 
         // GET: Texts/Edit/5
@@ -111,14 +111,11 @@ namespace FactCheck84.Controllers
             }
 
             var text = await _context.Texts.FindAsync(id);
-
             if (text == null)
             {
                 return NotFound();
             }
-            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Status", text.TextStatusId);
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Name", text.AuthorId);
-
+            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id", text.TextStatusId);
             return View(text);
         }
 
@@ -157,7 +154,7 @@ namespace FactCheck84.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Status", text.TextStatusId);
+            ViewData["TextStatusId"] = new SelectList(_context.TextStatuses, "Id", "Id", text.TextStatusId);
             return View(text);
         }
 
@@ -202,7 +199,7 @@ namespace FactCheck84.Controllers
 
         private bool TextExists(int id)
         {
-          return (_context.Texts?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Texts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

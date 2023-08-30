@@ -7,13 +7,13 @@ namespace FactCheck84.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "{0} required")]
         public String Title { get; set; }
-        [Required(ErrorMessage = "{0} required")]
+        //[Required(ErrorMessage = "{0} required")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "{0} required")]
+        //[Required(ErrorMessage = "{0} required")]
         public string Content { get; set; }
-        [Required(ErrorMessage = "{0} required")]
+        //[Required(ErrorMessage = "{0} required")]
         public int AuthorId { get; set; }
-        [Required(ErrorMessage = "{0} required")]
+        //[Required(ErrorMessage = "{0} required")]
         public int TextStatusId { get; set; }
         public string CensoredContent { get; set; }
         [DataType(DataType.Date)]
