@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.AuthorId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
@@ -28,9 +31,6 @@
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.TextStatus)
             </th>
             <th></th>
@@ -39,6 +39,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -53,9 +56,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TextStatus.Id)

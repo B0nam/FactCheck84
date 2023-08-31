@@ -13,10 +13,11 @@ namespace FactCheck84.Models
         public bool IsHidden { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTime CreationDate { get; set; }
 
         public RedactedWord()
         {
+            CreationDate = DateTime.Now;
         }
 
         public RedactedWord(int id, String word, String newWord, bool isHidden)

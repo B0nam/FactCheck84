@@ -1,0 +1,103 @@
+﻿@model FactCheck84.Models.Text
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    .book-conteiner {
+        display: flex;
+        flex-direction: column
+    }
+
+    .book-title-conteiner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .book-title {
+        font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
+        font-size: 30px;
+        padding: 20px;
+        margin-top: 15px;
+        inline-size: 500px;
+        overflow-wrap: break-word;
+        text-align:center;
+    }
+
+    .book-description-conteiner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .book-description {
+        font-family: "Times New Roman","Helvetica Neue",Arial,sans-serif;
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .book-content-conteiner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .book-content {
+        font-family: "Times New Roman","Helvetica Neue",Arial,sans-serif;
+        font-size: 20px;
+        padding: 10px;
+        text-align: justify;
+    }
+
+    .book-author-conteiner {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+    }
+
+    .book-author {
+        font-family: "Times New Roman","Helvetica Neue",Arial,sans-serif;
+        font-size: 17px;
+        padding: 10px;
+        text-align: right;
+        line-height: 20px;
+    }
+
+    .redacted {
+        background-color: black;
+        color: black;
+    }
+
+</style>
+
+
+<div class="book-conteiner">
+    <div class="book-title-conteiner">
+        <div class="book-title">@Html.DisplayFor(model => model.Title)</div>
+    </div>
+    <hr></hr>
+    <div class="book-description-conteiner">
+        <div class="book-description"><i>"@Html.DisplayFor(model => model.Description)"</i></div>
+    </div>
+    <div class="book-content-conteiner">
+        <div class="book-content" id="content">@Html.DisplayFor(model => model.CensoredContent)</div>
+    </div>
+    <div class="book-author-conteiner">
+        <div class="book-author">@Html.DisplayFor(model => model.Author.Name)<br> @Html.DisplayFor(model => model.CreationDate)</div>
+    </div>
+    <hr></hr
+</div>
+<div class="options">
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Library">Back to List</a> |
+    <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
+</div>
+
+<script>
+    var search = "[REDACTED]";
+    var replacement = "<span class=\"redacted\">" + search + "</span>";
+
+    document.body.innerHTML = document.body.innerHTML.split(search).join(replacement)
+</script>
