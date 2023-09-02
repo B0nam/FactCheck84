@@ -120,7 +120,7 @@
 
 <div class="list-conteiner">
     <div class="title-conteiner">
-        <h1>Redacted Words</h1>
+        <h1>Authors</h1>
         <a asp-action="Create">Create New</a>
         <hr></hr>
         <div class="header-conteiner">
@@ -150,7 +150,7 @@
                             @Html.DisplayFor(modelItem => item.Address)
                         </div>
                         <div class="card-3">
-                            @Html.DisplayFor(modelItem => item.AuthorStatus)
+                            @Html.DisplayFor(modelItem => item.AuthorStatus.Status)
                         </div>
                         <div class="card-4">
                             <a class="custom-custom" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

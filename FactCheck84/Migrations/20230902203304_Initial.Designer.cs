@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FactCheck84.Migrations
 {
     [DbContext(typeof(FactCheck84Context))]
-    [Migration("20230831004737_Initial")]
+    [Migration("20230902203304_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
