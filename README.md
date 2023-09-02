@@ -3,7 +3,7 @@
 ## Sobre o projeto
 FactCheck84 é um projeto que simula uma plataforma de verificação de fatos e censura de uma sociedade Distopica. O projeto foi criado se baseando no livro "1984" do autor George Orwell onde a verdade é controlada por um governo autoritário.
 
-![home](https://github.com/B0nam/FactCheck84/assets/85623265/6c2b765c-a9dd-4d9d-b5be-a6781a6a891b)
+![home](https://github.com/B0nam/FactCheck84/assets/85623265/7d839dd9-4157-4616-be88-967c4518e3f8)
 
 O objetivo principal do projeto era que eu aprendesse melhor C# e POO. O projeto em sí foi uma experiencia extremamente divertida e desafiadora de se fazer, já que eu possuia quase que nenhum conhecimento nem experiencia em desenvolvimento de sistemas Web, muito menos utilizando programação orientada a objeto.
 
@@ -18,7 +18,17 @@ As funcionalidades existentes no projeto são:
 - Controle do status dos textos. (Publico, Oficial, Privado e Restrito)
 - Controle do status dos autores.
 
-![library](https://github.com/B0nam/FactCheck84/assets/85623265/6cd552db-a55d-461b-b135-d8bc99df4e59)
+### Biblioteca
+![library](https://github.com/B0nam/FactCheck84/assets/85623265/403d82ae-3c94-435f-a6c1-10af4aeafb4c)
+
+### Visualização dos textos
+![book](https://github.com/B0nam/FactCheck84/assets/85623265/863260d0-1dfd-404c-95f2-0bce5e87d5c6)
+
+### Censurar palavras
+![redactedWords](https://github.com/B0nam/FactCheck84/assets/85623265/caf3c3cf-00d8-494e-b8b5-8dc21e112999)
+
+### Gerenciar autores
+![Authors](https://github.com/B0nam/FactCheck84/assets/85623265/6ec8494c-9e25-4084-8131-cbc53737f49e)
 
 ## Tecnologias Utilizadas
 - ASP.NET Core
