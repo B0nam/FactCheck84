@@ -1,16 +1,18 @@
 ﻿@model IEnumerable<FactCheck84.Models.Text>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Library";
 }
 
 <style>
-    .list-conteiner {
+    .list-conteiner
+    {
         display: flex;
         flex-direction: column;
     }
+    .title-conteiner
+    {
 
-    .title-conteiner {
     }
 
     .header-conteiner {
@@ -18,7 +20,6 @@
         justify-content: space-around; /* Alinha os itens horizontalmente com espaçamento igual */
         align-items: start; /* Alinha os itens verticalmente no centro */
     }
-
     .body-conteiner {
         height: 100%;
         width: 100%;
@@ -30,6 +31,7 @@
         border-style: none;
         outline: none;
         text-decoration: none;
+
         height: 7vh;
         background-color: #222;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
@@ -49,12 +51,13 @@
         transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
         margin-top: 5px;
         margin-bottom: 5px;
+
     }
 
-        .card-conteiner:hover, .card-conteiner:focus {
-            background-color: #4E4E4E; /* Altera a cor de fundo ao passar o mouse */
-            opacity: 0.9;
-        }
+    .card-conteiner:hover, .card-conteiner:focus {
+        background-color: #4E4E4E; /* Altera a cor de fundo ao passar o mouse */
+        opacity: 0.9;
+    }
 
     .card-status-color {
         height: 100%;
@@ -67,11 +70,13 @@
         flex-direction: row;
         align-items: center;
         padding: 10px;
+        
         height: 100%;
         width: 99%;
     }
 
-    .card-left {
+    .card-left
+    {
         width: 15%;
     }
 
@@ -84,7 +89,8 @@
     }
 
 
-    .card-author {
+    .card-author
+    {
         text-align: start;
     }
 
@@ -92,14 +98,15 @@
         text-align: start;
     }
 
-    .card-date {
+    .card-date{
         text-align: end;
     }
 
-    .header-content {
+    .header-content
+    {
         height: 5vh;
         width: 100%;
-        display: flex;
+        display:flex;
         justify-content: flex-start;
     }
 
@@ -134,45 +141,45 @@
         </div>
     </div>
     <div class="body-conteiner">
-        @foreach (var item in Model)
+    @foreach (var item in Model)
+    {
+        string backgroundColor;
+        
+        if (item.TextStatusId == 1)
         {
-            string backgroundColor;
-
-            if (item.TextStatusId == 1)
-            {
-                backgroundColor = "#00D1FF";
-            }
-            else if (item.TextStatusId == 2)
-            {
-                backgroundColor = "#FFE500";
-            }
-            else if (item.TextStatusId == 3)
-            {
-                backgroundColor = "#970000";
-            }
-            else if (item.TextStatusId == 4)
-            {
-                backgroundColor = "#6B0086";
-            }
-            else
-            {
-                backgroundColor = "#222";
-            }
-
-            <a class="card-conteiner" asp-action="Details" asp-route-id="@item.Id">
-                <div class="card-status-color" style="background-color: @backgroundColor;"></div>
-                <div class="card-content-conteiner">
-                    <div class="card-left">
-                        <div class="card-author">@Html.DisplayFor(modelItem => item.Author.Name)</div>
-                    </div>
-                    <div class="card-middle">
-                        <div class="card-text ellipsis"><strong>@item.Title</strong> - <cite>@item.Description</cite></div>
-                    </div>
-                    <div class="card-right">
-                        <div class="card-date">@item.CreationDate.ToString("dd/MM/yyyy")</div>
-                    </div>
-                </div>
-            </a>
+            backgroundColor = "#00D1FF";
         }
+            else if (item.TextStatusId == 2)
+        {
+            backgroundColor = "#FFE500";
+        }
+        else if (item.TextStatusId == 3)
+        {
+            backgroundColor = "#970000";
+        }
+        else if (item.TextStatusId == 4)
+        {
+            backgroundColor = "#6B0086";
+        }
+        else
+        {
+            backgroundColor = "#222";
+        }
+
+        <a class="card-conteiner" asp-action="Details" asp-route-id="@item.Id">
+            <div class="card-status-color" style="background-color: @backgroundColor;"></div>
+            <div class="card-content-conteiner">
+                <div class="card-left">
+                        <div class="card-author">@Html.DisplayFor(modelItem => item.Author.Name)</div>
+                </div>
+                <div class="card-middle">
+                        <div class="card-text ellipsis"><strong>@item.Title</strong> - <cite>@item.Description</cite></div>
+                </div>
+                <div class="card-right">
+                        <div class="card-date">@item.CreationDate.ToString("dd/MM/yyyy")</div>
+                </div>
+            </div>
+        </a>
+    }
     </div>
 </div>
